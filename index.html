@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Passenger Info System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top left, #fc466b, #3f5efb);
+      overflow-x: hidden;
+      position: relative;
+      color: white;
+    }
+
+    .rainbow-text {
+      background: linear-gradient(90deg, #ff6ec4, #7873f5, #4facfe, #00f2fe, #fcb045);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 8s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    header {
+      padding: 60px 20px 30px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3.2rem;
+      margin: 0;
+    }
+
+    p.subtitle {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      max-width: 700px;
+      margin-inline: auto;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 25px;
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 25px 20px;
+      backdrop-filter: blur(10px);
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, #ffffff33 0%, transparent 70%);
+      animation: rotateLight 6s linear infinite;
+    }
+
+    @keyframes rotateLight {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .feature-card i {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: #fff;
+      animation: floatIcon 2s ease-in-out infinite;
+    }
+
+    @keyframes floatIcon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .feature-card h3 {
+      margin: 10px 0 5px;
+      font-size: 1.3rem;
+    }
+
+    .next-btn {
+      background: linear-gradient(90deg, #f7971e, #ffd200, #ff6ec4);
+      color: #000;
+      padding: 15px 35px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      margin: 40px auto;
+      display: block;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    }
+
+    .next-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+
+    canvas#particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+  </style>
+</head>
+<body>
+
+  <canvas id="particles"></canvas>
+
+  <header>
+    <h1 class="rainbow-text">Passenger Info System 🚄</h1>
+    <p class="subtitle">Experience smart travel with live train data, platform updates, delays, and more!</p>
+  </header>
+
+  <section class="features">
+    <div class="feature-card">
+      <i class="fas fa-clock"></i>
+      <h3>Live Train Timings</h3>
+      <p>Access current train arrival/departure times.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-map-marker-alt"></i>
+      <h3>Platform Navigation</h3>
+      <p>Know the exact platform number of your train.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-bullhorn"></i>
+      <h3>Instant Delay Alerts</h3>
+      <p>Get real-time notifications about delays and changes.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-train-subway"></i>
+      <h3>Route Map</h3>
+      <p>Explore the full route with station info & stops.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-user-shield"></i>
+      <h3>Safety Tips</h3>
+      <p>Access security alerts and travel safety tips.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-comment-dots"></i>
+      <h3>Help Desk Chat</h3>
+      <p>Live chat support for passenger queries & emergencies.</p>
+    </div>
+  </section>
+
+  <button class="next-btn" onclick="window.location.href='abcd.html'">Next ➡️</button>
+
+  <script>
+    function goNext() {
+      window.location.href = "dashboard.html";
+    }
+
+    // Particle effect (simple)
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    const particles = [];
+
+    function initParticles() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      for (let i = 0; i < 60; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          r: Math.random() * 2 + 1,
+          dx: (Math.random() - 0.5) * 0.5,
+          dy: (Math.random() - 0.5) * 0.5
+        });
+      }
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = "#ffffff55";
+      for (let p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if (p.x < 0 || p.x > width) p.dx *= -1;
+        if (p.y < 0 || p.y > height) p.dy *= -1;
+      }
+      requestAnimationFrame(drawParticles);
+    }
+
+    window.addEventListener("resize", initParticles);
+    initParticles();
+    drawParticles();
+  </script>
+
+</body>
+</html>
